@@ -14,23 +14,25 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex-none w-[20%] text-white flex  pt-20 bg-secondary">
+    <nav className="flex-none w-[20%] text-white flex pt-20 bg-secondary">
       <div className="flex-1 p-4 background">
-        <div className=" mb-4 flex flex-col items-start justify-between">
-          <Link
-            to="/"
-            aria-label="Homepage"
-            className="text-white hover:text-yellow-300 flex items-center "
-            onClick={handleClick("Attendance clicked")}
-          >
-            Attendance
+        <div className="mb-4 flex flex-col items-start">
+          <div className="flex items-center w-full justify-between">
+            <Link
+              to="/"
+              aria-label="Homepage"
+              className="text-white hover:text-yellow-300 flex items-center text-2xl"
+              onClick={handleClick("Attendance clicked")}
+            >
+              Attendance
+            </Link>
             <IoIosArrowDown 
-              className="ml-2 cursor-pointer"
+              className={`cursor-pointer ${dropdownOpen === 'attendance' ? 'rotate-180' : ''} transition-transform duration-300`}
               onClick={toggleDropdown('attendance')}
             />
-          </Link>
+          </div>
           {dropdownOpen === 'attendance' && (
-            <div className=" mt-2 w-48  text-white shadow-lg rounded-lg">
+            <div className="w-full text-white shadow-lg rounded-lg mt-2">
               <Link
                 to="/attendance/option1"
                 className="block px-4 py-2 hover:bg-gray-600"
@@ -56,24 +58,26 @@ const Navbar = () => {
           )}
         </div>
         
-        <div className=" mb-4 flex flex-col items-start justify-between">
-          <Link
-            to="/program"
-            aria-label="Go to Program"
-            className="text-white hover:text-yellow-300 flex items-center  "
-            onClick={handleClick("Program clicked")}
-          >
-            Program
+        <div className="mb-4 flex flex-col items-start">
+          <div className="flex items-center w-full justify-between">
+            <Link
+              to="/program"
+              aria-label="Go to Program"
+              className="text-white hover:text-yellow-300 flex items-center text-2xl"
+              onClick={handleClick("Program clicked")}
+            >
+              Program
+            </Link>
             <IoIosArrowDown 
-              className="ml-2 cursor-pointer"
+              className={`cursor-pointer ${dropdownOpen === 'program' ? 'rotate-180' : ''} transition-transform duration-300`}
               onClick={toggleDropdown('program')}
             />
-          </Link>
+          </div>
           {dropdownOpen === 'program' && (
-            <div className="left-0 mt-2 w-48  text-white shadow-lg rounded-lg">
+            <div className="w-full text-white shadow-lg rounded-lg mt-2">
               <Link
                 to="/program/option1"
-                className="block px-4 py-2  hover:bg-gray-600"
+                className="block px-4 py-2 hover:bg-gray-600"
                 onClick={handleClick("Program Option 1 clicked")}
               >
                 Option 1
