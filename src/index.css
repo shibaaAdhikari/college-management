@@ -19,11 +19,20 @@
     -webkit-backdrop-filter: blur(0.2px);
 }
 
-.backgroundI{
+/* .backgroundI{
     border-bottom: 4px solid rgba(50, 6, 33, 1);   
-}
+} */
 
 .cardbg{
     box-shadow: 0 0 10px 1px #f3eff2;
 }
-
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  
+  .dropdown-content.open {
+    max-height: 200px; /* Adjust this value as needed */
+  }
+  
