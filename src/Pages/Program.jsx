@@ -5,7 +5,7 @@ import { fetchProgram } from '../redux/slice/program';
 
 const Program = () => {
   const dispatch = useDispatch();
-  const { isLoading, data, isError } = useSelector((state) => state.program);
+  const {data} = useSelector((state) => state.program);
 
   useEffect(() => {
     if (data) {
@@ -14,18 +14,14 @@ const Program = () => {
   }, [data]);
 
   const handleButtonClick = () => {
-    console.log('Button clicked');
     dispatch(fetchProgram());
   };
 
   return (
-    <div className='mt-40'>
+    <div className='mt-24'>
       <button onClick={handleButtonClick} className='text-white'>
         Get Program
       </button>
-      {isLoading && <p>Loading...</p>}
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
-      {isError && <p>Error fetching data</p>}
     </div>
   );
 };

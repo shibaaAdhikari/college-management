@@ -1,7 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-// import { data } from 'autoprefixer';
 
-// action
 export const fetchProgram = createAsyncThunk('program/fetchProgram', async () => {
     const response = await fetch('https://dummyjson.com/posts');
     const data = await response.json();

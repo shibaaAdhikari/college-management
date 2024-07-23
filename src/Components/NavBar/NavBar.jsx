@@ -1,38 +1,36 @@
-// src/components/Navbar/Navbar.js
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  return (
- 
-       <nav className="flex-none w-[20%] h-screen  text-white flex flex-col pt-20 bg-secondary -z-10">
-        {/* <div className="flex items-center justify-center mb-6 bg-slate-700">
-          <h2 className="text-2xl font-semibold text-center p-4">College Management</h2>
-        </div> */}
-        <ul className="flex-1 p-4  background">
-          <li className="mb-4">
-            <NavLink
-              to="/"
-              aria-label="Go to Attendance"
-              className="text-white"
-            >
-              Attendance
-            </NavLink>
-          </li>
-          <li className="mb-4">
-            <NavLink
-              to="/program"
-              aria-label="Go to Attendance"
-              className="text-white"
-            >
-              Program
-            </NavLink>
-          </li>
-          
-        </ul>
-      </nav> 
-   
+  const handleClick = (message) => () => {
+    console.log(message);
+  };
 
+  return (
+    <nav className="flex-none w-[20%] h-screen text-white flex flex-col pt-20 bg-secondary">
+      <div className="flex-1 p-4 background">
+        <div className="mb-4">
+          <Link
+            to="/"
+            aria-label="Homepage"
+            className="text-white hover:text-yellow-300" // Change color on hover
+            onClick={handleClick("Attendance clicked")}
+          >
+            Attendance
+          </Link>
+        </div>
+        <div className="mb-4">
+          <Link
+            to="/program"
+            aria-label="Go to Program"
+            className="text-white hover:text-yellow-300" // Change color on hover
+            onClick={handleClick("Program clicked")}
+          >
+            Program
+          </Link>
+        </div>
+      </div>
+    </nav>
   );
 };
 

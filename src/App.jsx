@@ -1,7 +1,7 @@
 // src/App.js
-import { Routes, Route } from 'react-router-dom';
+import { Route,Routes } from 'react-router-dom';
 import './App.css';
-import NavBar from './Components/NavBar/NavBar';
+import NavBar from "./Components/NavBar/NavBar"
 import Attendance from './Pages/Attendance/Attendance';
 import TopBar from './Components/NavBar/TopBar';
 import Program from './Pages/Program';
@@ -13,7 +13,7 @@ function App() {
     <TopBar/>
       <div className="flex min-h-screen">
       <NavBar />
-      <main className="flex-1 bg-black p-4"> {/* Content area */}
+      <main className="flex-1 bg-black p-4">
         <Routes>
           <Route path="/" element={<Attendance />} />
           <Route path="/program" element={<Program />} />
