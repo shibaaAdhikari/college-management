@@ -19,9 +19,24 @@ const Program = () => {
 
   return (
     <div className='mt-24'>
-      <button onClick={handleButtonClick} className='text-white'>
-        Get Program
-      </button>
+     <button
+  onClick={handleButtonClick}
+  className="
+    bg-blue-500
+    hover:bg-blue-600
+    text-white
+    font-semibold
+    py-2
+    px-4
+    rounded
+    transition
+    duration-300
+    ease-in-out
+  "
+>
+  List All Program
+</button>
+
     </div>
   );
 };
