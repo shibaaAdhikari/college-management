@@ -1,0 +1,29 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+
+
+.bg-custom-gradient {
+    background-image: linear-gradient(to right, #434343 0%, black 100%);
+  }
+
+
+
+.background{
+    background: rgba(50, 6, 33, 0.03);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0.2px);
+    -webkit-backdrop-filter: blur(0.2px);
+}
+
+.backgroundI{
+    border-bottom: 4px solid rgba(50, 6, 33, 1);   
+}
+
+.cardbg{
+    box-shadow: 0 0 10px 1px #f3eff2;
+}
+
