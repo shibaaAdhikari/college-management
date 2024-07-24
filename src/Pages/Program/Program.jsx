@@ -1,7 +1,7 @@
 // src/components/Program.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProgram } from '../redux/slice/program';
+import { fetchProgram } from '../../redux/slice/program';
 
 const Program = () => {
   const dispatch = useDispatch();
