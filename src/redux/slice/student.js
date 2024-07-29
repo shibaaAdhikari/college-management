@@ -20,6 +20,13 @@ export const addStudent = createAsyncThunk(
     }
 );
 
+export const getStudents = createAsyncThunk(
+    'students/getStudents',
+    async () => {
+        const response = await axios.get('http://127.0.0.1:8000/api/GetStudent');
+        return response.data;
+    }
+);
 const studentSlice = createSlice({
     name: 'students',
     initialState,
@@ -34,6 +41,17 @@ const studentSlice = createSlice({
                 state.students.push(action.payload); // Adjust based on API response
             })
             .addCase(addStudent.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(getStudents.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(getStudents.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.students = action.payload; // Adjust based on API response
+            })
+            .addCase(getStudents.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });

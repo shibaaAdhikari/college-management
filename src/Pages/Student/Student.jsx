@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
-
-const studentsData = [
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 2, fullName: 'Jane Smith', gender: 'Female', email: 'janesmith@example.com', phone: '0987654321', address: '456 Main St', date_of_birth: '2001-02-02', program_id: 2 },
-    // Add more mock student data as needed
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getStudents } from '../../redux/slice/student';
 
 const Student = () => {
-    const [students, setStudents] = useState([]);
+    const dispatch = useDispatch();
+    const students = useSelector((state) => state.students.students);
+    const status = useSelector((state) => state.students.status);
     const [currentPage, setCurrentPage] = useState(1);
     const [editingStudent, setEditingStudent] = useState(null);
     const studentsPerPage = 10;
 
     useEffect(() => {
-        setStudents(studentsData);
-    }, []);
+        dispatch(getStudents());
+    }, [dispatch]);
 
     const indexOfLastStudent = currentPage * studentsPerPage;
     const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
@@ -27,16 +25,12 @@ const Student = () => {
     };
 
     const handleSave = () => {
-        const updatedStudents = students.map(student =>
-            student.id === editingStudent.id ? editingStudent : student
-        );
-        setStudents(updatedStudents);
+        // Add logic to save the student updates (e.g., dispatch an update action)
         setEditingStudent(null);
     };
 
     const handleDelete = (id) => {
-        const updatedStudents = students.filter(student => student.id !== id);
-        setStudents(updatedStudents);
+        // Add logic to delete the student (e.g., dispatch a delete action)
     };
 
     const handleChange = (e) => {
@@ -44,15 +38,24 @@ const Student = () => {
         setEditingStudent({ ...editingStudent, [name]: value });
     };
 
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+
+    if (status === 'failed') {
+        return <div>Error loading students.</div>;
+    }
+
     return (
         <div className="flex flex-col items-center justify-center bg-ternary mt-24">
-            <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg p-6">
+            <div className="w-full max-w-8xl bg-white rounded-lg shadow-lg p-6">
                 <h2 className="text-2xl font-bold mb-4 text-center">Student List</h2>
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
@@ -65,8 +68,9 @@ const Student = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                         {currentStudents.map((student) => (
                             <tr key={student.id}>
-                                <td className="px-6 py-4 whitespace-nowrap">{student.id}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{student.fullName}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{student.roll_no}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{student.fname}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{student.lname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.gender}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.email}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.phone}</td>
@@ -115,11 +119,21 @@ const Student = () => {
                         <h2 className="text-2xl font-bold mb-4">Edit Student</h2>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-gray-700">Full Name</label>
+                                <label className="block text-gray-700">First Name</label>
                                 <input
                                     type="text"
-                                    name="fullName"
-                                    value={editingStudent.fullName}
+                                    name="firstName"
+                                    value={editingStudent.firstName}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Last Name</label>
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    value={editingStudent.lastName}
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
                                 />
