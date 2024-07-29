@@ -1,11 +1,33 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import axios from 'axios';
 
-export const fetchProgram = createAsyncThunk('program/fetchProgram', async () => {
-    const response = await fetch('https://dummyjson.com/posts');
-    const data = await response.json();
-    console.log('Fetched data from dummyjson:', data);  
-    return data;
-});
+
+// addProgram
+export const addProgram = createAsyncThunk(
+    'programs/addProgram',
+    async (programDetails) => {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/AddProgram', programDetails, {
+          headers: {
+            'Content-Type': 'application/json', // Adjust if needed
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.error('Failed to add program:', error);
+        throw error;
+      }
+    }
+  );
+
+//   getProgram
+export const getProgram = createAsyncThunk(
+    'students/getProgram',
+    async () => {
+        const response = await axios.get('http://127.0.0.1:8000/api/GetProgram');
+        return response.data;
+    }
+);
 
 const programSlice = createSlice({
     name:'program',
@@ -15,19 +37,29 @@ const programSlice = createSlice({
         isError:false,
     },
     extraReducers:(builder)=>{
-       builder.addCase(fetchProgram.pending,(state,action)=>{
-            state.isLoading = true;
+        builder
+        .addCase(addProgram.pending, (state) => {
+            state.status = 'loading';
         })
-
-       builder.addCase(fetchProgram.fulfilled, (state , action) =>{
-        state.isLoading=false;
-        state.action=action.payload;
-       })
-
-       builder.addCase(fetchProgram.rejected,(state,action)=>{
-        console.log("Error",action.payload);
-        state.isError=true;
-       })
+        .addCase(addProgram.fulfilled, (state, action) => {
+            state.status = 'succeeded';
+            state.students.push(action.payload); // Adjust based on API response
+        })
+        .addCase(addProgram.rejected, (state, action) => {
+            state.status = 'failed';
+            state.isError = action.error.message;
+        })
+        .addCase(getProgram.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(getProgram.fulfilled, (state, action) => {
+            state.status = 'succeeded';
+            state.students = action.payload; // Adjust based on API response
+        })
+        .addCase(getProgram.rejected, (state, action) => {
+            state.status = 'failed';
+            state.isError = action.error.message;
+        })
     }
 })
 

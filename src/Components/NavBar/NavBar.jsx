@@ -100,38 +100,13 @@ const Navbar = () => {
               >
                 Program
               </Link>
-              <IoIosArrowDown
+              {/* <IoIosArrowDown
                 className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${
                   dropdownOpen === 'program' ? 'rotate-180' : ''
                 } transition-transform duration-300`}
                 onClick={toggleDropdown('program')}
-              />
+              /> */}
             </div>
-            {dropdownOpen === 'program' && (
-              <div className="w-full text-white shadow-lg rounded-lg mt-2">
-                <Link
-                  to="/program/addProgram"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Program Option 1 clicked")}
-                >
-                  Add Program
-                </Link>
-                <Link
-                  to="/program/deleteProgram"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Program Option 2 clicked")}
-                >
-                  Delete Program
-                </Link>
-                <Link
-                  to="/program/updateProgram"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Program Option 3 clicked")}
-                >
-                  Update Program
-                </Link>
-              </div>
-            )}
           </div>
           {/* Student */}
           <div className="mb-4 flex flex-col items-start">
