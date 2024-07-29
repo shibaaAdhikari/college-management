@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addStudent } from '../../redux/slice/student';
+import { toast } from 'react-toastify';
 
 const AddStudent = () => {
     const [studentDetails, setStudentDetails] = useState({
@@ -41,6 +42,7 @@ const AddStudent = () => {
             formData.append(key, studentDetails[key]);
         }
         dispatch(addStudent(formData));
+        toast.success("student added sucessfully")
     };
 
     return (

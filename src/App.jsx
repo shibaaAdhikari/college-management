@@ -11,6 +11,7 @@ import UpdateProgram from './Pages/Program/UpdateProgram';
 import Student from "./Pages/Student/Student";
 import AddStudent from './Pages/Student/AddStudent';
 
+
 function App() {
   return (
     <div className="flex h-screen">
@@ -23,7 +24,6 @@ function App() {
       <div className="flex flex-col flex-1">
         {/* Topbar */}
         <TopBar />
-
         {/* Routes */}
         <div className="flex-1 p-4 overflow-auto bg-ternary">
           <Routes>

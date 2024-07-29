@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudents, updateStudent } from '../../redux/slice/student';
+import { getStudents, updateStudent, deleteStudent } from '../../redux/slice/student';
+import { toast } from 'react-toastify';
 
 const Student = () => {
     const dispatch = useDispatch();
@@ -24,46 +25,56 @@ const Student = () => {
         setEditingStudent(student);
     };
 
-    const handleSave = () => {
-        // Check that editingStudent has all necessary fields
-        console.log('Editing student data:', editingStudent);
+    const handleSave = async () => {
+        try {
+            const studentDetails = {
+                fname: editingStudent.fname,
+                lname: editingStudent.lname,
+                gender: editingStudent.gender,
+                email: editingStudent.email,
+                phone: editingStudent.phone,
+                address: editingStudent.address,
+                date_of_birth: editingStudent.date_of_birth,
+                program_id: editingStudent.program_id,
+            };
     
-        const formData = new FormData();
-        formData.append('fname', editingStudent.fname);
-        formData.append('lname', editingStudent.lname);
-        formData.append('gender', editingStudent.gender);
-        formData.append('email', editingStudent.email);
-        formData.append('phone', editingStudent.phone);
-        formData.append('address', editingStudent.address);
-        formData.append('date_of_birth', editingStudent.date_of_birth);
-        formData.append('program_id', editingStudent.program_id);
+            console.log('Sending studentDetails:', studentDetails);
     
-        if (editingStudent.image) {
-            formData.append('image', editingStudent.image);
+            await dispatch(updateStudent({ studentId: editingStudent.student_id, studentDetails }));
+            toast.success('Student updated successfully');
+            setEditingStudent(null);
+        } catch (error) {
+            console.error('Error updating student:', error);
+            toast.error('Error updating student');
         }
-    
-        // Log FormData content
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}: ${value}`);
-        }
-    
-        dispatch(updateStudent({ studentId: editingStudent.student_id, studentData: formData }));
-        setEditingStudent(null);
-    };
-    
-
-    const handleDelete = (id) => {
-        // Add logic to delete the student (e.g., dispatch a delete action)
     };
 
-    const handleChange = (e) => {
-        const { name, value, files } = e.target;
-        setEditingStudent(prev => ({
-            ...prev,
-            [name]: name === 'image' ? files[0] : value
-        }));
+    const handleDelete = async (studentId) => {
+        try {
+             dispatch(deleteStudent(studentId));
+             toast.success('Student deleted successfully');
+        } catch (error) {
+            console.error('Error deleting student:', error);
+            toast.success('Error deleting student');
+        }
     };
-    
+
+    const handleChange = (event) => {
+        const { name, value, type, files } = event.target;
+        
+        // Handle file input separately
+        if (type === 'file') {
+            setEditingStudent({
+                ...editingStudent,
+                [name]: files[0], // Update state with the selected file
+            });
+        } else {
+            setEditingStudent({
+                ...editingStudent,
+                [name]: value,
+            });
+        }
+    };
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -114,7 +125,7 @@ const Student = () => {
                                         Edit
                                     </button>
                                     <button
-                                        onClick={() => handleDelete(student.id)}
+                                        onClick={() => handleDelete(student.student_id)}
                                         className="text-red-500 hover:text-red-700"
                                     >
                                         Delete
@@ -147,13 +158,14 @@ const Student = () => {
                     <div className="bg-white rounded-lg p-8 w-full max-w-2xl">
                         <h2 className="text-2xl font-bold mb-4">Edit Student</h2>
                         <div className="grid grid-cols-2 gap-4">
-                        <div>
+                            <div>
                                 <label className="block text-gray-700">Id</label>
                                 <input
                                     type="text"
-                                    name="fname"
+                                    name="student_id"
                                     value={editingStudent.student_id}
                                     className="border border-gray-300 rounded p-2 w-full"
+                                    readOnly
                                 />
                             </div>
                             <div>
@@ -232,15 +244,6 @@ const Student = () => {
                                     type="text"
                                     name="program_id"
                                     value={editingStudent.program_id}
-                                    onChange={handleChange}
-                                    className="border border-gray-300 rounded p-2 w-full"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-gray-700">Image</label>
-                                <input
-                                    type="file"
-                                    name="image" // Handle file input
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
                                 />

@@ -29,26 +29,36 @@ export const getStudents = createAsyncThunk(
     }
 );
 
-// deletestudent
-
-
-
-
-
 // editstudent
 export const updateStudent = createAsyncThunk(
     'students/updateStudent',
-    async ({ studentId, studentData }) => {
-        const response = await axios.put(`http://127.0.0.1:8000/api/EditStudent/${studentId}`, studentData, {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Ensure this is set if you're using FormData
-            }
-        });
-        return response.data;
+    async ({ studentId, studentDetails }) => {
+        try {
+            const response = await axios.put(
+                `http://127.0.0.1:8000/api/EditStudent/${studentId}`,
+                studentDetails, // Adjust if sending JSON instead of FormData
+                {
+                    headers: {
+                        'Content-Type': 'application/json', // Use 'multipart/form-data' if sending FormData
+                    },
+                }
+            );
+            return response.data; 
+      
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 );
 
-
+// deletestudent
+export const deleteStudent = createAsyncThunk(
+    'students/deleteStudent',
+    async (studentId) => {
+        const response = await axios.delete(`http://127.0.0.1:8000/api/DeleteStudent/${studentId}`);
+        return studentId;
+    }
+);
 
 const studentSlice = createSlice({
     name: 'students',
@@ -90,6 +100,17 @@ const studentSlice = createSlice({
                 }
             })
             .addCase(updateStudent.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(deleteStudent.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(deleteStudent.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.students = state.students.filter(student => student.student_id !== action.payload);
+            })
+            .addCase(deleteStudent.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });
