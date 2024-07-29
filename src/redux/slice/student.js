@@ -7,7 +7,7 @@ const initialState = {
     error: null
 };
 
-// Add the addStudent thunk here
+// Addstudent
 export const addStudent = createAsyncThunk(
     'students/addStudent',
     async (studentDetails) => {
@@ -20,6 +20,7 @@ export const addStudent = createAsyncThunk(
     }
 );
 
+// getstudent
 export const getStudents = createAsyncThunk(
     'students/getStudents',
     async () => {
@@ -27,6 +28,28 @@ export const getStudents = createAsyncThunk(
         return response.data;
     }
 );
+
+// deletestudent
+
+
+
+
+
+// editstudent
+export const updateStudent = createAsyncThunk(
+    'students/updateStudent',
+    async ({ studentId, studentData }) => {
+        const response = await axios.put(`http://127.0.0.1:8000/api/EditStudent/${studentId}`, studentData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // Ensure this is set if you're using FormData
+            }
+        });
+        return response.data;
+    }
+);
+
+
+
 const studentSlice = createSlice({
     name: 'students',
     initialState,
@@ -52,6 +75,21 @@ const studentSlice = createSlice({
                 state.students = action.payload; // Adjust based on API response
             })
             .addCase(getStudents.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            .addCase(updateStudent.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateStudent.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                const updatedStudent = action.payload.student;
+                const index = state.students.findIndex(student => student.student_id === updatedStudent.student_id);
+                if (index !== -1) {
+                    state.students[index] = updatedStudent;
+                }
+            })
+            .addCase(updateStudent.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });

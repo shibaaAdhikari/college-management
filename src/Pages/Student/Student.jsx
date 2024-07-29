@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStudents } from '../../redux/slice/student';
+import { getStudents, updateStudent } from '../../redux/slice/student';
 
 const Student = () => {
     const dispatch = useDispatch();
@@ -25,18 +25,45 @@ const Student = () => {
     };
 
     const handleSave = () => {
-        // Add logic to save the student updates (e.g., dispatch an update action)
+        // Check that editingStudent has all necessary fields
+        console.log('Editing student data:', editingStudent);
+    
+        const formData = new FormData();
+        formData.append('fname', editingStudent.fname);
+        formData.append('lname', editingStudent.lname);
+        formData.append('gender', editingStudent.gender);
+        formData.append('email', editingStudent.email);
+        formData.append('phone', editingStudent.phone);
+        formData.append('address', editingStudent.address);
+        formData.append('date_of_birth', editingStudent.date_of_birth);
+        formData.append('program_id', editingStudent.program_id);
+    
+        if (editingStudent.image) {
+            formData.append('image', editingStudent.image);
+        }
+    
+        // Log FormData content
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+    
+        dispatch(updateStudent({ studentId: editingStudent.student_id, studentData: formData }));
         setEditingStudent(null);
     };
+    
 
     const handleDelete = (id) => {
         // Add logic to delete the student (e.g., dispatch a delete action)
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setEditingStudent({ ...editingStudent, [name]: value });
+        const { name, value, files } = e.target;
+        setEditingStudent(prev => ({
+            ...prev,
+            [name]: name === 'image' ? files[0] : value
+        }));
     };
+    
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -54,6 +81,7 @@ const Student = () => {
                     <thead className="bg-gray-50">
                         <tr>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Roll no</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
@@ -68,6 +96,7 @@ const Student = () => {
                     <tbody className="bg-white divide-y divide-gray-200">
                         {currentStudents.map((student) => (
                             <tr key={student.id}>
+                                <td className="px-6 py-4 whitespace-nowrap">{student.student_id}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.roll_no}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.fname}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.lname}</td>
@@ -118,12 +147,21 @@ const Student = () => {
                     <div className="bg-white rounded-lg p-8 w-full max-w-2xl">
                         <h2 className="text-2xl font-bold mb-4">Edit Student</h2>
                         <div className="grid grid-cols-2 gap-4">
+                        <div>
+                                <label className="block text-gray-700">Id</label>
+                                <input
+                                    type="text"
+                                    name="fname"
+                                    value={editingStudent.student_id}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
                             <div>
                                 <label className="block text-gray-700">First Name</label>
                                 <input
                                     type="text"
-                                    name="firstName"
-                                    value={editingStudent.firstName}
+                                    name="fname"
+                                    value={editingStudent.fname}
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
                                 />
@@ -132,8 +170,8 @@ const Student = () => {
                                 <label className="block text-gray-700">Last Name</label>
                                 <input
                                     type="text"
-                                    name="lastName"
-                                    value={editingStudent.lastName}
+                                    name="lname"
+                                    value={editingStudent.lname}
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
                                 />
@@ -194,6 +232,15 @@ const Student = () => {
                                     type="text"
                                     name="program_id"
                                     value={editingStudent.program_id}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Image</label>
+                                <input
+                                    type="file"
+                                    name="image" // Handle file input
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
                                 />
