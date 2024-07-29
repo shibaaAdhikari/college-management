@@ -2,26 +2,17 @@ import React, { useState, useEffect } from 'react';
 
 const studentsData = [
     { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
-    { id: 1, fullName: 'John Doe', gender: 'Male', email: 'johndoe@example.com', phone: '1234567890', address: '123 Main St', date_of_birth: '2000-01-01', program_id: 1 },
+    { id: 2, fullName: 'Jane Smith', gender: 'Female', email: 'janesmith@example.com', phone: '0987654321', address: '456 Main St', date_of_birth: '2001-02-02', program_id: 2 },
     // Add more mock student data as needed
 ];
 
 const Student = () => {
     const [students, setStudents] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [editingStudent, setEditingStudent] = useState(null);
     const studentsPerPage = 10;
 
     useEffect(() => {
-        // Fetch student data from API or use mock data
         setStudents(studentsData);
     }, []);
 
@@ -31,9 +22,31 @@ const Student = () => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    const handleEdit = (student) => {
+        setEditingStudent(student);
+    };
+
+    const handleSave = () => {
+        const updatedStudents = students.map(student =>
+            student.id === editingStudent.id ? editingStudent : student
+        );
+        setStudents(updatedStudents);
+        setEditingStudent(null);
+    };
+
+    const handleDelete = (id) => {
+        const updatedStudents = students.filter(student => student.id !== id);
+        setStudents(updatedStudents);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setEditingStudent({ ...editingStudent, [name]: value });
+    };
+
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-black p-4">
-            <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
+        <div className="flex flex-col items-center justify-center bg-ternary mt-24">
+            <div className="w-full max-w-7xl bg-white rounded-lg shadow-lg p-6">
                 <h2 className="text-2xl font-bold mb-4 text-center">Student List</h2>
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -46,6 +59,7 @@ const Student = () => {
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program ID</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -59,6 +73,20 @@ const Student = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{student.address}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.date_of_birth}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{student.program_id}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">
+                                    <button
+                                        onClick={() => handleEdit(student)}
+                                        className="text-blue-500 hover:text-blue-700 mr-4"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => handleDelete(student.id)}
+                                        className="text-red-500 hover:text-red-700"
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -81,6 +109,99 @@ const Student = () => {
                     </nav>
                 </div>
             </div>
+            {editingStudent && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-lg p-8 w-full max-w-2xl">
+                        <h2 className="text-2xl font-bold mb-4">Edit Student</h2>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-gray-700">Full Name</label>
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    value={editingStudent.fullName}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Gender</label>
+                                <input
+                                    type="text"
+                                    name="gender"
+                                    value={editingStudent.gender}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={editingStudent.email}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Phone</label>
+                                <input
+                                    type="text"
+                                    name="phone"
+                                    value={editingStudent.phone}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Address</label>
+                                <input
+                                    type="text"
+                                    name="address"
+                                    value={editingStudent.address}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Date of Birth</label>
+                                <input
+                                    type="date"
+                                    name="date_of_birth"
+                                    value={editingStudent.date_of_birth}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700">Program ID</label>
+                                <input
+                                    type="text"
+                                    name="program_id"
+                                    value={editingStudent.program_id}
+                                    onChange={handleChange}
+                                    className="border border-gray-300 rounded p-2 w-full"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex justify-end mt-4">
+                            <button
+                                onClick={() => setEditingStudent(null)}
+                                className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSave}
+                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
