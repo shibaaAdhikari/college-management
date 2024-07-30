@@ -37,9 +37,9 @@ const Student = () => {
                 date_of_birth: editingStudent.date_of_birth,
                 program_id: editingStudent.program_id,
             };
-    
+
             console.log('Sending studentDetails:', studentDetails);
-    
+
             await dispatch(updateStudent({ studentId: editingStudent.student_id, studentDetails }));
             toast.success('Student updated successfully');
             setEditingStudent(null);
@@ -51,8 +51,8 @@ const Student = () => {
 
     const handleDelete = async (studentId) => {
         try {
-             dispatch(deleteStudent(studentId));
-             toast.success('Student deleted successfully');
+            dispatch(deleteStudent(studentId));
+            toast.success('Student deleted successfully');
         } catch (error) {
             console.error('Error deleting student:', error);
             toast.success('Error deleting student');
@@ -61,7 +61,7 @@ const Student = () => {
 
     const handleChange = (event) => {
         const { name, value, type, files } = event.target;
-        
+
         // Handle file input separately
         if (type === 'file') {
             setEditingStudent({
@@ -190,14 +190,19 @@ const Student = () => {
                             </div>
                             <div>
                                 <label className="block text-gray-700">Gender</label>
-                                <input
-                                    type="text"
+                                <select
                                     name="gender"
                                     value={editingStudent.gender}
                                     onChange={handleChange}
                                     className="border border-gray-300 rounded p-2 w-full"
-                                />
+                                >
+                                    <option value="" disabled>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
                             </div>
+
                             <div>
                                 <label className="block text-gray-700">Email</label>
                                 <input

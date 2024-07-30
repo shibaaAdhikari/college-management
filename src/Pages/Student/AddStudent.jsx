@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState,useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import { addStudent } from '../../redux/slice/student';
+import { getProgram } from '../../redux/slice/program';
 import { toast } from 'react-toastify';
 
 const AddStudent = () => {
+    const dispatch = useDispatch();
+    const programs = useSelector((state) => state.programs.programs); 
     const [studentDetails, setStudentDetails] = useState({
         fname: '',
         lname: '',
@@ -18,7 +21,9 @@ const AddStudent = () => {
         status: true
     });
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getProgram());
+    }, [dispatch]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -42,7 +47,7 @@ const AddStudent = () => {
             formData.append(key, studentDetails[key]);
         }
         dispatch(addStudent(formData));
-        toast.success("student added sucessfully")
+        toast.success("Student added successfully");
     };
 
     return (
@@ -53,26 +58,43 @@ const AddStudent = () => {
                     {[
                         { label: 'First Name', name: 'fname', type: 'text' },
                         { label: 'Last Name', name: 'lname', type: 'text' },
-                        { label: 'Gender', name: 'gender', type: 'text' },
+                        { label: 'Gender', name: 'gender', type: 'select', options: ['Male', 'Female', 'Other'] },
                         { label: 'Email', name: 'email', type: 'email' },
                         { label: 'Phone', name: 'phone', type: 'tel' },
                         { label: 'Address', name: 'address', type: 'text' },
                         { label: 'Password', name: 'password', type: 'password' },
                         { label: 'Date of Birth', name: 'date_of_birth', type: 'date' },
-                        { label: 'Program ID', name: 'program_id', type: 'number' },
+                        { label: 'Program', name: 'program_id', type: 'select', options: programs }
                     ].map((field) => (
                         <div className="mb-4" key={field.name}>
                             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
                                 {field.label}
                             </label>
-                            <input
-                                type={field.type}
-                                id={field.name}
-                                name={field.name}
-                                value={studentDetails[field.name]}
-                                onChange={handleChange}
-                                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                            />
+                            {field.type === 'select' ? (
+                                <select
+                                    id={field.name}
+                                    name={field.name}
+                                    value={studentDetails[field.name]}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                    <option value="">Select {field.label}</option>
+                                    {field.options.map((option) => (
+                                        <option key={option.program_id || option} value={option.program_id || option}>
+                                            {option.name || option}
+                                        </option>
+                                    ))}
+                                </select>
+                            ) : (
+                                <input
+                                    type={field.type}
+                                    id={field.name}
+                                    name={field.name}
+                                    value={studentDetails[field.name]}
+                                    onChange={handleChange}
+                                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                                />
+                            )}
                         </div>
                     ))}
                     <div className="mb-4">
