@@ -5,7 +5,7 @@ import {studentReducer} from './slice/student';
 
 export const store = configureStore ({
     reducer:{
-         program:programReducer,
+         programs:programReducer,
          students: studentReducer, 
     },
 })
