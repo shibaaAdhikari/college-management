@@ -7,6 +7,8 @@ import TopBar from './Components/NavBar/TopBar';
 import Program from './Pages/Program/Program';
 import Student from "./Pages/Student/Student";
 import AddStudent from './Pages/Student/AddStudent';
+import Teacher from './Pages/Teacher/Teacher';
+import AddTeacher from './Pages/Teacher/AddTeacher';
 
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
             <Route path="/program" element={<Program />} />
             <Route path="/student" element={<Student />} />
             <Route path="/student/addStudent" element={<AddStudent />} />
+            <Route path="/Teacher" element={<Teacher />} />
+            <Route path="/teacher/addTeacher" element={<AddTeacher />} />
           </Routes>
         </div>
       </div>

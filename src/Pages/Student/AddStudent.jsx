@@ -110,22 +110,9 @@ const AddStudent = () => {
                         />
                     </div>
                 </div>
-                <div className="mb-4">
-                    <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-                        Status
-                    </label>
-                    <input
-                        type="checkbox"
-                        id="status"
-                        name="status"
-                        checked={studentDetails.status}
-                        onChange={handleChange}
-                        className="mt-1"
-                    />
-                </div>
                 <button
                     onClick={handleAddStudent}
-                    className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
+                    className="w-full py-2 px-4 bg-secondary text-white font-semibold rounded-md shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-75"
                 >
                     Add Student
                 </button>

@@ -57,7 +57,6 @@ export const editProgram = createAsyncThunk(
 );
 
 // deleteProgram
-// deleteProgram thunk
 export const deleteProgram = createAsyncThunk(
   'programs/deleteProgram',
   async (programId, { rejectWithValue }) => {
@@ -69,8 +68,6 @@ export const deleteProgram = createAsyncThunk(
     }
   }
 );
-
-
 
 const programSlice = createSlice({
   name: 'programs',

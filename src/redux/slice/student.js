@@ -71,7 +71,7 @@ const studentSlice = createSlice({
             })
             .addCase(addStudent.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.students.push(action.payload); // Adjust based on API response
+                state.students.push(action.payload); 
             })
             .addCase(addStudent.rejected, (state, action) => {
                 state.status = 'failed';
@@ -82,7 +82,7 @@ const studentSlice = createSlice({
             })
             .addCase(getStudents.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.students = action.payload; // Adjust based on API response
+                state.students = action.payload; 
             })
             .addCase(getStudents.rejected, (state, action) => {
                 state.status = 'failed';
@@ -116,5 +116,6 @@ const studentSlice = createSlice({
             });
     }
 });
+
 export const studentReducer = studentSlice.reducer;
-// export default ;
+

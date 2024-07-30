@@ -35,9 +35,8 @@ const Navbar = () => {
       </div>
       {/* Sidebar */}
       <nav
-        className={`fixed inset-y-0 left-0 transform h-screen ${
-          sidebarOpen ? 'translate-x-0 w-[200px]' : '-translate-x-full w-0'
-        } md:relative md:w-[260px] md:translate-x-0 bg-secondary text-white flex flex-col pt-20 transition-transform duration-300 z-40`}
+        className={`fixed inset-y-0 left-0 transform h-screen ${sidebarOpen ? 'translate-x-0 w-[200px]' : '-translate-x-full w-0'
+          } md:relative md:w-[260px] md:translate-x-0 bg-secondary text-white flex flex-col pt-20 transition-transform duration-300 z-40`}
       >
         <button
           className="absolute top-0 left-0 md:hidden p-4 text-white z-50"
@@ -57,9 +56,8 @@ const Navbar = () => {
                 Attendance
               </Link>
               <IoIosArrowDown
-                className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${
-                  dropdownOpen === 'attendance' ? 'rotate-180' : ''
-                } transition-transform duration-300`}
+                className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'attendance' ? 'rotate-180' : ''
+                  } transition-transform duration-300`}
                 onClick={toggleDropdown('attendance')}
               />
             </div>
@@ -120,9 +118,8 @@ const Navbar = () => {
                 Student
               </Link>
               <IoIosArrowDown
-                className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${
-                  dropdownOpen === 'student' ? 'rotate-180' : ''
-                } transition-transform duration-300`}
+                className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'student' ? 'rotate-180' : ''
+                  } transition-transform duration-300`}
                 onClick={toggleDropdown('student')}
               />
             </div>
@@ -134,6 +131,35 @@ const Navbar = () => {
                   onClick={handleClick("Student Option 1 clicked")}
                 >
                   Add Student
+                </Link>
+              </div>
+            )}
+          </div>
+          {/* Teacher */}
+          <div className="mb-4 flex flex-col items-start">
+            <div className="flex items-center w-full justify-between">
+              <Link
+                to="/teacher"
+                aria-label="Go to teacher"
+                className="text-white hover:text-yellow-300 flex items-center text-lg md:text-2xl"
+                onClick={handleClick("teacher clicked")}
+              >
+                Teacher
+              </Link>
+              <IoIosArrowDown
+                className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'teacher' ? 'rotate-180' : ''
+                  } transition-transform duration-300`}
+                onClick={toggleDropdown('teacher')}
+              />
+            </div>
+            {dropdownOpen === 'teacher' && (
+              <div className="w-full text-white shadow-lg rounded-lg mt-2">
+                <Link
+                  to="/teacher/addTeacher"
+                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
+                  onClick={handleClick("teacher Option 1 clicked")}
+                >
+                  Add teacher
                 </Link>
               </div>
             )}
