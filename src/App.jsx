@@ -1,9 +1,8 @@
-// src/App.js
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import NavBar from "./Components/NavBar/NavBar";
 import Attendance from './Pages/Attendance/Attendance';
-import TopBar from './Components/NavBar/TopBar';
 import Program from './Pages/Program/Program';
 import Student from "./Pages/Student/Student";
 import AddStudent from './Pages/Student/AddStudent';
@@ -12,17 +11,23 @@ import AddTeacher from './Pages/Teacher/AddTeacher';
 
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64">
-        <NavBar />
+      <div className={`transition-all duration-300 ${isSidebarOpen ? 'w-54' : 'w-10'}`}>
+        <NavBar toggleSidebar={handleToggleSidebar} isSidebarOpen={isSidebarOpen} />
       </div>
 
       {/* Main content area */}
-      <div className="flex flex-col flex-1">
+      <div className={`flex flex-col flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-5'}`}>
         {/* Topbar */}
-        <TopBar />
+        {/* <TopBar /> */}
         {/* Routes */}
         <div className="flex-1 p-4 overflow-auto bg-ternary">
           <Routes>

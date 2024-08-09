@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTeacher } from '../../redux/slice/teacher';
 
@@ -10,6 +9,7 @@ const AddTeacher = () => {
     lname: '',
     gender: '',
     email: '',
+    password: '', 
     phone: '',
     address: '',
     date_of_birth: '',
@@ -20,9 +20,15 @@ const AddTeacher = () => {
   });
 
   const handleAddTeacher = () => {
+    // Ensure the password field is not empty before submitting
+    if (teacherDetails.password === '') {
+      console.error('Password field is required');
+      return;
+    }
+
     const formData = new FormData();
     for (const key in teacherDetails) {
-        formData.append(key, teacherDetails[key]);
+      formData.append(key, teacherDetails[key]);
     }
     dispatch(addTeacher(formData));
   }
@@ -30,28 +36,30 @@ const AddTeacher = () => {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setTeacherDetails({
-        ...teacherDetails,
-        [name]: type === 'checkbox' ? checked : value
+      ...teacherDetails,
+      [name]: type === 'checkbox' ? checked : value
     });
-};
+  };
+
   return (
     <div className="flex flex-col items-center justify-center bg-ternary mt-24">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold mb-4 text-center">Add Teacher</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {
-            [{ label: 'First Name', name: 'fname', type: 'text' },
-            { label: 'Last Name', name: 'lname', type: 'text' },
-            { label: 'Gender', name: 'gender', type: 'select', options: ['Male', 'Female', 'Other'] },
-            { label: 'Email', name: 'email', type: 'email' },
-            { label: 'Password', name: 'email', type: 'password' },
-            { label: 'Phone', name: 'phone', type: 'tel' },
-            { label: 'Address', name: 'address', type: 'text' },
-            { label: 'Date of Birth', name: 'date_of_birth', type: 'date' },
-            { label: 'Education', name: 'education', type: 'text' },
-            { label: 'Specializaton', name: 'specialization', type: 'text' },
-            { label: 'in_time', name: 'in_time', type: 'time' },
-            { label: 'working_hour', name: 'working_hour', type: 'text' },
+            [
+              { label: 'First Name', name: 'fname', type: 'text' },
+              { label: 'Last Name', name: 'lname', type: 'text' },
+              { label: 'Gender', name: 'gender', type: 'select', options: ['Male', 'Female', 'Other'] },
+              { label: 'Email', name: 'email', type: 'email' },
+              { label: 'Password', name: 'password', type: 'password' },
+              { label: 'Phone', name: 'phone', type: 'tel' },
+              { label: 'Address', name: 'address', type: 'text' },
+              { label: 'Date of Birth', name: 'date_of_birth', type: 'date' },
+              { label: 'Education', name: 'education', type: 'text' },
+              { label: 'Specialization', name: 'specialization', type: 'text' },
+              { label: 'In Time', name: 'in_time', type: 'time' },
+              { label: 'Working Hour', name: 'working_hour', type: 'text' }
             ].map((field) => (
               <div className="mb-4" key={field.name}>
                 <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
@@ -67,8 +75,8 @@ const AddTeacher = () => {
                   >
                     <option value="">Select {field.label}</option>
                     {field.options.map((option) => (
-                      <option key={option.teacher_id || option} value={option.teacher_id || option}>
-                        {option.name || option}
+                      <option key={option} value={option}>
+                        {option}
                       </option>
                     ))}
                   </select>
@@ -83,10 +91,7 @@ const AddTeacher = () => {
                   />
                 )}
               </div>
-
             ))
-
-
           }
         </div>
         <button
@@ -97,7 +102,7 @@ const AddTeacher = () => {
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default AddTeacher
+export default AddTeacher;
