@@ -75,7 +75,7 @@ const Program = () => {
 
   return (
     <>
-      <div className='mt-24 p-4'>
+      <div className='mt-4 p-4'>
         <div className='mb-4'>
           <h2 className='text-lg font-semibold mb-2'>Add Program</h2>
           <input

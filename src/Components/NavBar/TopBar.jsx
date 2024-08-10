@@ -4,7 +4,7 @@ import { FaEnvelope, FaBell, FaUserCircle } from 'react-icons/fa';
 
 const TopBar = () => {
   return (
-    <div className="h-16 bg-gray-700 text-white flex items-center px-4 justify-between">
+    <div className="h-16 bg-sky-950 text-white flex items-center px-4 justify-between">
       <div>
         <input 
           type="text" 

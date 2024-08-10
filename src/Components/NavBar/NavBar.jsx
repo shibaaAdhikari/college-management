@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown, IoIosMenu, IoIosHome, IoIosSchool, IoIosPeople, IoIosBook } from 'react-icons/io';
+import { SiGoogleclassroom } from "react-icons/si";
+import { GiTeacher, GiBookshelf} from "react-icons/gi";
+
 import { RxCross1 } from 'react-icons/rx';
 
 const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
@@ -17,9 +20,8 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
   return (
     <div className="relative h-screen">
       <nav
-        className={`fixed inset-y-0 left-0 bg-secondary text-white flex flex-col pt-5 z-40 transition-all duration-300 ${
-          isSidebarOpen ? 'w-64' : 'w-16'
-        }`}
+        className={`fixed inset-y-0 left-0 bg-secondary text-white flex flex-col pt-5 z-40 transition-all duration-300 ${isSidebarOpen ? 'w-64' : 'w-16'
+          }`}
       >
         <div
           className={`flex hover:cursor-pointer hover:opacity-80 ${isSidebarOpen ? 'justify-end mr-5 md:justify-end md:mr-5' : 'justify-center mr-0'}`}
@@ -44,38 +46,7 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
               >
                 {isSidebarOpen ? 'Home' : <IoIosHome className="w-6 h-6" />}
               </Link>
-              {isSidebarOpen && (
-                <IoIosArrowDown
-                  className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'home' ? 'rotate-180' : ''} transition-transform duration-300`}
-                  onClick={toggleDropdown('home')}
-                />
-              )}
             </div>
-            {dropdownOpen === 'home' && (
-              <div className="w-full text-white shadow-lg rounded-lg mt-2">
-                <Link
-                  to="/home/option1"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("home Option 1 clicked")}
-                >
-                  Option 1
-                </Link>
-                <Link
-                  to="/home/option2"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("home Option 2 clicked")}
-                >
-                  Option 2
-                </Link>
-                <Link
-                  to="/home/option3"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("home Option 3 clicked")}
-                >
-                  Option 3
-                </Link>
-              </div>
-            )}
           </div>
 
           {/* Program */}
@@ -132,7 +103,7 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
                 className="text-white hover:text-yellow-300 flex items-center text-lg md:text-2xl"
                 onClick={handleClick("Teacher clicked")}
               >
-                {isSidebarOpen ? 'Teacher' : <IoIosPeople className="w-6 h-6" />}
+                {isSidebarOpen ? 'Teacher' : <GiTeacher className="w-6 h-6" />}
               </Link>
               {isSidebarOpen && (
                 <IoIosArrowDown
@@ -154,46 +125,46 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
             )}
           </div>
 
-          {/* Periodic */}
+          {/* perodic */}
           <div className="mb-4 flex flex-col items-start">
             <div className="flex items-center w-full justify-between">
               <Link
                 to="/periodic"
-                aria-label="Go to Periodic"
+                aria-label="Go to Perodic"
                 className="text-white hover:text-yellow-300 flex items-center text-lg md:text-2xl"
-                onClick={handleClick("Periodic clicked")}
+                onClick={handleClick("Teacher clicked")}
               >
-                {isSidebarOpen ? 'Periodic' : <IoIosBook className="w-6 h-6" />}
+                {isSidebarOpen ? 'Periodic' : <SiGoogleclassroom className="w-6 h-6" />}
+              </Link>
+            </div>
+          </div>
+
+          {/* library */}
+             <div className="mb-4 flex flex-col items-start">
+            <div className="flex items-center w-full justify-between">
+              <Link
+                to="/library"
+                aria-label="Go to library"
+                className="text-white hover:text-yellow-300 flex items-center text-lg md:text-2xl"
+                onClick={handleClick("library clicked")}
+              >
+                {isSidebarOpen ? 'library' : <GiBookshelf className="w-6 h-6" />}
               </Link>
               {isSidebarOpen && (
                 <IoIosArrowDown
-                  className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'periodic' ? 'rotate-180' : ''} transition-transform duration-300`}
-                  onClick={toggleDropdown('periodic')}
+                  className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'library' ? 'rotate-180' : ''} transition-transform duration-300`}
+                  onClick={toggleDropdown('library')}
                 />
               )}
             </div>
-            {dropdownOpen === 'periodic' && (
+            {dropdownOpen === 'library' && (
               <div className="w-full text-white shadow-lg rounded-lg mt-2">
                 <Link
-                  to="/periodic/option1"
+                  to="/library/addlibrary"
                   className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Periodic Option 1 clicked")}
+                  onClick={handleClick("library Option 1 clicked")}
                 >
-                  Option 1
-                </Link>
-                <Link
-                  to="/periodic/option2"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Periodic Option 2 clicked")}
-                >
-                  Option 2
-                </Link>
-                <Link
-                  to="/periodic/option3"
-                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
-                  onClick={handleClick("Periodic Option 3 clicked")}
-                >
-                  Option 3
+                  Add library
                 </Link>
               </div>
             )}
