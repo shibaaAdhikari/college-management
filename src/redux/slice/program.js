@@ -14,7 +14,7 @@ export const addProgram = createAsyncThunk(
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/AddProgram', programDetails, {
         headers: {
-          'Content-Type': 'application/json', // Adjust if needed
+          'Content-Type': 'application/json', 
         },
       });
       return response.data;

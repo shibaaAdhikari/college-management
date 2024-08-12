@@ -3,6 +3,7 @@ import { programReducer } from './slice/program';
 import {studentReducer} from './slice/student'; 
 import { teacherReducer } from "./slice/teacher";
 import { periodicReducer } from "./slice/periodic";
+import { shiftReducer } from "./slice/classShift";
 
 
 export const store = configureStore ({
@@ -11,5 +12,6 @@ export const store = configureStore ({
          students: studentReducer,
          teachers:teacherReducer, 
          periodics:periodicReducer,
+         shifts:shiftReducer,
     },
 })

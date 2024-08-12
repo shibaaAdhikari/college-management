@@ -1,12 +1,14 @@
-import React, { useState,useEffect } from 'react';
-import { useDispatch,useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addStudent } from '../../redux/slice/student';
 import { getProgram } from '../../redux/slice/program';
+import { getShift } from '../../redux/slice/classShift';
 import { toast } from 'react-toastify';
 
 const AddStudent = () => {
     const dispatch = useDispatch();
-    const programs = useSelector((state) => state.programs.programs); 
+    const programs = useSelector((state) => state.programs.programs);
+    const shifts = useSelector((state) => state.shifts.shifts);
     const [studentDetails, setStudentDetails] = useState({
         fname: '',
         lname: '',
@@ -17,28 +19,39 @@ const AddStudent = () => {
         password: '',
         date_of_birth: '',
         program_id: '',
+        classShift_id: '',
         image: null,
         status: true
     });
 
     useEffect(() => {
         dispatch(getProgram());
+        dispatch(getShift());
     }, [dispatch]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setStudentDetails({
-            ...studentDetails,
-            [name]: type === 'checkbox' ? checked : value
+        setStudentDetails(prevState => {
+            const updatedDetails = {
+                ...prevState,
+                [name]: type === 'checkbox' ? checked : value
+            };
+
+            // Log the classShift_id when it changes
+            if (name === 'classShift_id') {
+                console.log('Selected Class Shift ID:', updatedDetails.classShift_id);
+            }
+
+            return updatedDetails;
         });
     };
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setStudentDetails({
-            ...studentDetails,
+        setStudentDetails(prevState => ({
+            ...prevState,
             image: file
-        });
+        }));
     };
 
     const handleAddStudent = () => {
@@ -64,7 +77,8 @@ const AddStudent = () => {
                         { label: 'Address', name: 'address', type: 'text' },
                         { label: 'Password', name: 'password', type: 'password' },
                         { label: 'Date of Birth', name: 'date_of_birth', type: 'date' },
-                        { label: 'Program', name: 'program_id', type: 'select', options: programs }
+                        { label: 'Program', name: 'program_id', type: 'select', options: programs },
+                        { label: 'Class Shift', name: 'classShift_id', type: 'select', options: shifts }
                     ].map((field) => (
                         <div className="mb-4" key={field.name}>
                             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
@@ -80,7 +94,7 @@ const AddStudent = () => {
                                 >
                                     <option value="">Select {field.label}</option>
                                     {field.options.map((option) => (
-                                        <option key={option.program_id || option} value={option.program_id || option}>
+                                        <option key={option.classShift_id || option.program_id || option} value={option.classShift_id || option.program_id || option}>
                                             {option.name || option}
                                         </option>
                                     ))}

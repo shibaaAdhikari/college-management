@@ -91,32 +91,30 @@ const Student = () => {
                 <table className="w-full min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
-                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Roll no</th>
-                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
-                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gender</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program ID</th>
+                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Shift</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
                         {currentStudents.map((student) => (
                             <tr key={student.id}>
-                                <td className="px-2 py-4 text-sm font-medium text-gray-900">{student.student_id}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.roll_no}</td>
-                                <td className="px-2 py-4 text-sm text-gray-500">{student.fname}</td>
-                                <td className="px-2 py-4 text-sm text-gray-500">{student.lname}</td>
+                                <td className="px-2 py-4 text-sm text-gray-500">{student.fname} {student.lname}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.gender}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.email}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.phone}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.address}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.date_of_birth}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.program_id}</td>
+                                <td className="px-2 py-4 text-sm text-gray-500">{student.classShift_id}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">
                                     <button
                                         onClick={() => handleEdit(student)}

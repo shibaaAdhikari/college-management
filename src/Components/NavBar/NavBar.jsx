@@ -60,7 +60,24 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
               >
                 {isSidebarOpen ? 'Program' : <IoIosSchool className="w-6 h-6" />}
               </Link>
+              {isSidebarOpen && (
+                <IoIosArrowDown
+                  className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'program' ? 'rotate-180' : ''} transition-transform duration-300`}
+                  onClick={toggleDropdown('program')}
+                />
+              )}
             </div>
+            {dropdownOpen === 'program' && (
+              <div className="w-full text-white shadow-lg rounded-lg mt-2">
+                <Link
+                  to="/program/classShift"
+                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
+                  onClick={handleClick("programShift Option 1 clicked")}
+                >
+                 Add Class Shift
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Student */}

@@ -10,6 +10,7 @@ import AddStudent from './Pages/Student/AddStudent';
 import Teacher from './Pages/Teacher/Teacher';
 import AddTeacher from './Pages/Teacher/AddTeacher';
 import Periodic from './Pages/Periodic/Periodic';
+import ProgramShift from './Pages/Program/ProgramShift';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -34,6 +35,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Attendance />} />
             <Route path="/program" element={<Program />} />
+            <Route path="/program/classShift" element={<ProgramShift />} />
             <Route path="/student" element={<Student />} />
             <Route path="/student/addStudent" element={<AddStudent />} />
             <Route path="/Teacher" element={<Teacher />} />
