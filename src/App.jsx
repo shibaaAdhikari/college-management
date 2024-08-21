@@ -11,6 +11,9 @@ import Teacher from './Pages/Teacher/Teacher';
 import AddTeacher from './Pages/Teacher/AddTeacher';
 import Periodic from './Pages/Periodic/Periodic';
 import ProgramShift from './Pages/Program/ProgramShift';
+import Addbook from './Pages/Library/Addbook';
+import Booklist from './Pages/Library/Booklist';
+import BookIssue from './Pages/BookIssued/BookIssue';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -41,6 +44,9 @@ function App() {
             <Route path="/Teacher" element={<Teacher />} />
             <Route path="/teacher/addTeacher" element={<AddTeacher />} />
             <Route path="/periodic" element={<Periodic />} />
+            <Route path="/library/addBook" element={<Addbook />} />
+            <Route path="/library/booklist" element={<Booklist/>}/>
+            <Route path="/book" element={<BookIssue/>}/>
           </Routes>
         </div>
       </div>

@@ -37,11 +37,11 @@ export const getPeriodic = createAsyncThunk(
 // editPeriodic thunk
 export const editPeriodic = createAsyncThunk(
   'Periodics/editPeriodic',
-  async ({ PeriodicId, PeriodicDetails }, { rejectWithValue }) => {
+  async ({ id, details }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/EditPeriodic/${PeriodicId}`,
-        PeriodicDetails,
+        `http://127.0.0.1:8000/api/EditPeriodic/${id}`,
+        details,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -50,11 +50,11 @@ export const editPeriodic = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-    
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
 
 // deletePeriodic
 export const deletePeriodic = createAsyncThunk(

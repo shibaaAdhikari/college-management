@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoIosArrowDown, IoIosMenu, IoIosHome, IoIosSchool, IoIosPeople, IoIosBook } from 'react-icons/io';
 import { SiGoogleclassroom } from "react-icons/si";
-import { GiTeacher, GiBookshelf} from "react-icons/gi";
+import { GiTeacher, GiBookshelf } from "react-icons/gi";
 
 import { RxCross1 } from 'react-icons/rx';
 
@@ -74,7 +74,7 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
                   className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
                   onClick={handleClick("programShift Option 1 clicked")}
                 >
-                 Add Class Shift
+                  Add Class Shift
                 </Link>
               </div>
             )}
@@ -157,7 +157,7 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
           </div>
 
           {/* library */}
-             <div className="mb-4 flex flex-col items-start">
+          <div className="mb-4 flex flex-col items-start">
             <div className="flex items-center w-full justify-between">
               <Link
                 to="/library"
@@ -177,11 +177,56 @@ const NavBar = ({ toggleSidebar, isSidebarOpen }) => {
             {dropdownOpen === 'library' && (
               <div className="w-full text-white shadow-lg rounded-lg mt-2">
                 <Link
-                  to="/library/addlibrary"
+                  to="/library/addBook"
                   className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
                   onClick={handleClick("library Option 1 clicked")}
                 >
-                  Add library
+                  Add Book
+                </Link>
+                <Link
+                  to="/library/booklist"
+                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
+                  onClick={handleClick("library Option 1 clicked")}
+                >
+                  Book List
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* Bookissue */}
+          <div className="mb-4 flex flex-col items-start">
+            <div className="flex items-center w-full justify-between">
+              <Link
+                to="/bookissue"
+                aria-label="Go to bookissue"
+                className="text-white hover:text-yellow-300 flex items-center text-lg md:text-2xl"
+                onClick={handleClick("bookissue clicked")}
+              >
+                {isSidebarOpen ? 'Book Issue' : <GiBookshelf className="w-6 h-6" />}
+              </Link>
+              {isSidebarOpen && (
+                <IoIosArrowDown
+                  className={`w-6 h-6 md:w-8 md:h-8 cursor-pointer ${dropdownOpen === 'bookissue' ? 'rotate-180' : ''} transition-transform duration-300`}
+                  onClick={toggleDropdown('bookissue')}
+                />
+              )}
+            </div>
+            {dropdownOpen === 'bookissue' && (
+              <div className="w-full text-white shadow-lg rounded-lg mt-2">
+                <Link
+                  to="/bookissue/addBook"
+                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
+                  onClick={handleClick("bookissue Option 1 clicked")}
+                >
+                  Add Book
+                </Link>
+                <Link
+                  to="/bookissue/booklist"
+                  className="block px-3 py-2 md:px-4 md:py-2 hover:bg-gray-600"
+                  onClick={handleClick("bookissue Option 1 clicked")}
+                >
+                  Book List
                 </Link>
               </div>
             )}

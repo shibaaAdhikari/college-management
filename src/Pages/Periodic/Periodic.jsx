@@ -20,7 +20,7 @@ const Periodic = () => {
       dispatch(addPeriodic({ name: periodicName }))
         .unwrap()
         .then(() => {
-          setPeriodicName(''); // Reset the input field
+          setPeriodicName(''); 
           dispatch(getPeriodic());
         })
         .catch((error) => {
@@ -37,9 +37,10 @@ const Periodic = () => {
 
   const handleSaveEdit = () => {
     if (editedPeriodicName.trim()) {
-      dispatch(editPeriodic({ id: editingPeriodic.id, details: { name: editedPeriodicName } }))
+      dispatch(editPeriodic({ id: editingPeriodic.periodic_id, details: { name: editedPeriodicName } }))
         .unwrap()
         .then(() => {
+          dispatch(getPeriodic()); 
           setEditingPeriodic(null);
           setEditedPeriodicName('');
         })
@@ -48,6 +49,8 @@ const Periodic = () => {
         });
     }
   };
+  
+  
 
   const handleCancelEdit = () => {
     setEditingPeriodic(null);
