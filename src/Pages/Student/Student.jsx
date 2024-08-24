@@ -100,6 +100,7 @@ const Student = () => {
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date of Birth</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program ID</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class Shift</th>
+                            <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Class</th>
                             <th className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
                         </tr>
                     </thead>
@@ -115,6 +116,7 @@ const Student = () => {
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.date_of_birth}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.program_id}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">{student.classShift_id}</td>
+                                <td className="px-2 py-4 text-sm text-gray-500">{student.periodic_id}</td>
                                 <td className="px-2 py-4 text-sm text-gray-500">
                                     <button
                                         onClick={() => handleEdit(student)}

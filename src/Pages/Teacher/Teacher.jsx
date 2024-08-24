@@ -49,7 +49,6 @@ const Teacher = () => {
             toast.error('Error updating teacher');
         }
     };
-
     const handleDelete = async (teacherId) => {
         try {
             await dispatch(deleteTeacher(teacherId)).unwrap(); 
@@ -60,7 +59,6 @@ const Teacher = () => {
         }
     };
     
-
     const handleChange = (event) => {
         const { name, value } = event.target;
 

@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addStudent } from '../../redux/slice/student';
 import { getProgram } from '../../redux/slice/program';
 import { getShift } from '../../redux/slice/classShift';
+import { getPeriodic } from '../../redux/slice/periodic';
 import { toast } from 'react-toastify';
 
 const AddStudent = () => {
     const dispatch = useDispatch();
     const programs = useSelector((state) => state.programs.programs);
     const shifts = useSelector((state) => state.shifts.shifts);
+    const periodics = useSelector((state) => state.periodics.periodics); // Fetching periodic data
     const [studentDetails, setStudentDetails] = useState({
         fname: '',
         lname: '',
@@ -19,6 +21,7 @@ const AddStudent = () => {
         password: '',
         date_of_birth: '',
         program_id: '',
+        periodic_id: '', // New field
         classShift_id: '',
         image: null,
         status: true
@@ -27,22 +30,16 @@ const AddStudent = () => {
     useEffect(() => {
         dispatch(getProgram());
         dispatch(getShift());
+        dispatch(getPeriodic()); // Fetching periodic data
     }, [dispatch]);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         setStudentDetails(prevState => {
-            const updatedDetails = {
+            return {
                 ...prevState,
                 [name]: type === 'checkbox' ? checked : value
             };
-
-            // Log the classShift_id when it changes
-            if (name === 'classShift_id') {
-                console.log('Selected Class Shift ID:', updatedDetails.classShift_id);
-            }
-
-            return updatedDetails;
         });
     };
 
@@ -78,7 +75,8 @@ const AddStudent = () => {
                         { label: 'Password', name: 'password', type: 'password' },
                         { label: 'Date of Birth', name: 'date_of_birth', type: 'date' },
                         { label: 'Program', name: 'program_id', type: 'select', options: programs },
-                        { label: 'Class Shift', name: 'classShift_id', type: 'select', options: shifts }
+                        { label: 'Class Shift', name: 'classShift_id', type: 'select', options: shifts },
+                        { label: 'Periodic', name: 'periodic_id', type: 'select', options: periodics } // New dropdown for periodic
                     ].map((field) => (
                         <div className="mb-4" key={field.name}>
                             <label htmlFor={field.name} className="block text-sm font-medium text-gray-700">
@@ -94,7 +92,7 @@ const AddStudent = () => {
                                 >
                                     <option value="">Select {field.label}</option>
                                     {field.options.map((option) => (
-                                        <option key={option.classShift_id || option.program_id || option} value={option.classShift_id || option.program_id || option}>
+                                        <option key={option.periodic_id || option.classShift_id || option.program_id || option} value={option.periodic_id || option.classShift_id || option.program_id || option}>
                                             {option.name || option}
                                         </option>
                                     ))}
